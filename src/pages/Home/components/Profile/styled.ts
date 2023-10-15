@@ -31,7 +31,7 @@ export const ProfileDetails = styled.div`
     margin-bottom: 0.5rem;
 
     h1 {
-      font-size: ${({ theme }) => theme.textSizes["title-title-l"]};
+      font-size: ${({ theme }) => theme.fontSizes["title-l"]};
       color: ${({ theme }) => theme.colors["base-title"]};
       line-height: 130%;
     }

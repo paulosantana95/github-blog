@@ -4,7 +4,7 @@ export const ExternalLinkContainer = styled.a`
   border: none;
   background: none;
   color: ${({ theme }) => theme.colors["brand-blue"]};
-  font-size: ${({ theme }) => theme.textSizes["components-link"]};
+  font-size: ${({ theme }) => theme.fontSizes["components-link"]};
   text-transform: uppercase;
   display: flex;
   align-items: center;
