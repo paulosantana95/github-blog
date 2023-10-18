@@ -4,6 +4,7 @@ import { Post } from "./components/Post";
 import { Profile } from "./components/Profile";
 import { SearchInput } from "./components/SearchInput";
 import { PostsListContainer } from "./styled";
+import { Spinner } from "../../components/Spinner";
 
 const username = import.meta.env.VITE_GITHUB_USERNAME;
 const reponame = import.meta.env.VITE_GITHUB_REPONAME;
@@ -24,19 +25,21 @@ export function Home() {
   const [posts, setPosts] = useState<ResponsePost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getPosts = useCallback(async (query: string = "") => {
-    try {
-      setIsLoading(true);
-      const response = await api.get(
-        `/search/issues?q=${query}%20repo:${username}/${reponame}`
-      );
+  const getPosts = useCallback(
+    async (query: string = "") => {
+      try {
+        setIsLoading(true);
+        const response = await api.get(
+          `/search/issues?q=${query}%20repo:${username}/${reponame}`
+        );
 
-      console.log(response.data);
-      setPosts(response.data.items);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        setPosts(response.data.items);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [posts]
+  );
 
   useEffect(() => {
     getPosts();
@@ -45,12 +48,16 @@ export function Home() {
   return (
     <>
       <Profile />
-      <SearchInput />
-      <PostsListContainer>
-        {posts.map((post) => (
-          <Post key={post.number} post={post} />
-        ))}
-      </PostsListContainer>
+      <SearchInput postsLength={posts.length} getPosts={getPosts} />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <PostsListContainer>
+          {posts.map((post) => (
+            <Post key={post.number} post={post} />
+          ))}
+        </PostsListContainer>
+      )}
     </>
   );
 }
