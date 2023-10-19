@@ -1,9 +1,9 @@
-import { ResponsePost } from "../..";
+import { IPost } from "../..";
 import { relativeDateFormatter } from "../../../../utils/formatter";
 import { PostContainer } from "./styled";
 
 interface PostProps {
-  post: ResponsePost;
+  post: IPost;
 }
 
 export function Post({ post }: PostProps) {

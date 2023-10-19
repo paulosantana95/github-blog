@@ -9,7 +9,7 @@ import { Spinner } from "../../components/Spinner";
 const username = import.meta.env.VITE_GITHUB_USERNAME;
 const reponame = import.meta.env.VITE_GITHUB_REPONAME;
 
-export interface ResponsePost {
+export interface IPost {
   title: string;
   body: string;
   created_at: string;
@@ -22,24 +22,21 @@ export interface ResponsePost {
 }
 
 export function Home() {
-  const [posts, setPosts] = useState<ResponsePost[]>([]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getPosts = useCallback(
-    async (query: string = "") => {
-      try {
-        setIsLoading(true);
-        const response = await api.get(
-          `/search/issues?q=${query}%20repo:${username}/${reponame}`
-        );
+  const getPosts = useCallback(async (query: string = "") => {
+    try {
+      setIsLoading(true);
+      const response = await api.get(
+        `/search/issues?q=${query}%20repo:${username}/${reponame}`
+      );
 
-        setPosts(response.data.items);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [posts]
-  );
+      setPosts(response.data.items);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     getPosts();

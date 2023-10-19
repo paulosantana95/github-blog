@@ -1,9 +1,6 @@
-import { formatDistanceToNow } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import moment from "moment";
+import "moment/dist/locale/pt-br";
 
 export function relativeDateFormatter(date: string) {
-  return formatDistanceToNow(new Date(date), {
-    addSuffix: true,
-    locale: ptBR,
-  }).replace("cerca de ", "");
+  return moment(date).fromNow();
 }
