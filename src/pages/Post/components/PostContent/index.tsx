@@ -8,18 +8,13 @@ interface PostContentProps {
 }
 
 export function PostContent({ content }: PostContentProps) {
-  const linkProperties = {
-    target: "_blank",
-    rel: "nofollow noopener noreferrer",
-  };
-
   return (
     <PostContentContainer>
       <Markdown
         children={content}
         components={{
           code(props) {
-            const { children, className, node, ...rest } = props;
+            const { children, className, ...rest } = props;
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
@@ -28,6 +23,7 @@ export function PostContent({ content }: PostContentProps) {
                 style={okaidia}
                 language={match[1]}
                 PreTag="div"
+                ref={undefined}
               />
             ) : (
               <code {...rest} className={className}>
